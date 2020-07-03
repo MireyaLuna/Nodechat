@@ -1,56 +1,48 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Luna Mireya Paralelo A</title>
-    <style>
-        body {
-            font-family: Arial;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: right;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Luna Mireya Paralelo A</title>
+  <style>
+  body{
+    font-family: Arial;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: right;
+  }
+  </style>
 </head>
-
 <body>
-    <ul>
-        <h2>
-            Luna Aruquipa Mireya Adriana
-        </h2>
-        </div>
-        <ul>
-            <h2>
-                Paralelo: "A"
-            </h2>
-            </div>
-            <h3>Chat:</h3>
-            <ul id="listado-msjs">
+  <ul><h2>
+    Luna Aruquipa Mireya Adriana
+  </h2></div>
+  <ul><h2>
+    Paralelo: "A"
+  </h2></div>
+  <h3>Chat:</h3>
+  <ul id="listado-msjs">
+    
+  </ul>
 
-            </ul>
+  <div id="env-msjs">
+	  <input id="nuevo-msj"  placeholder="Nuevo mensaje">
+	  <button id="btn-msj" onclick="enviarMensaje()">Enviar</button>
+  </div>
+  
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
 
-            <div id="env-msjs" class="row align-items-start">
-                <input id="nuevo-msj" class="form-control" placeholder="Escribe un mensaje para enviar :)">
-                <button id="btn-msj" class="btn btn-primary" onclick="enviarMensaje()">Enviar</button>
-            </div>
+    socket.on('nuevo mensaje', function (msj) {
+      $('#listado-msjs').append( $('<li>').text(msj) );
+    });
 
-            <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-            <script src="/socket.io/socket.io.js"></script>
-            <script>
-                var socket = io(); // Inicializamos socketIO en el cliente
-
-                socket.on('nuevo mensaje', function (msj) {
-                    $('#listado-msjs').append($('<li>').text(msj));
-                });
-
-                function enviarMensaje() {
-                    socket.emit('nuevo mensaje', $('#nuevo-msj').val());
-                    $('#nuevo-msj').val('');
-                };
-            </script>
+    function enviarMensaje() {
+        socket.emit('nuevo mensaje', $('#nuevo-msj').val());
+        $('#nuevo-msj').val('');
+    };
+  </script>
 </body>
-
 </html>
